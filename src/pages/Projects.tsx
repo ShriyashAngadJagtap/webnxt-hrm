@@ -54,16 +54,16 @@ const columnConfig: Record<ProjectStatus, { badge: string; accent: string; progr
 };
 
 const categoryColors: Record<Category, { bg: string; text: string; dot: string }> = {
-  Android: { bg: "bg-green-50 border border-green-200", text: "text-green-600", dot: "bg-green-500" },
-  iPhone: { bg: "bg-red-50 border border-red-200", text: "text-red-500", dot: "bg-red-500" },
-  Website: { bg: "bg-indigo-50 border border-indigo-200", text: "text-indigo-600", dot: "bg-indigo-500" },
+  Android: { bg: "bg-green-100 border border-green-300", text: "text-green-700", dot: "bg-green-500" },
+  iPhone: { bg: "bg-red-100 border border-red-300", text: "text-red-600", dot: "bg-red-500" },
+  Website: { bg: "bg-indigo-100 border border-indigo-300", text: "text-indigo-700", dot: "bg-indigo-500" },
   Testing: { bg: "bg-sky-50 border border-sky-200", text: "text-sky-600", dot: "bg-sky-500" },
 };
 
 const priorityConfig: Record<Priority, { color: string; bg: string; icon: typeof ArrowUp; label: string }> = {
-  Low: { color: "text-green-600", bg: "bg-green-50 border border-green-200", icon: ArrowDown, label: "Low" },
-  Medium: { color: "text-amber-600", bg: "bg-amber-50 border border-amber-200", icon: Diamond, label: "Medium" },
-  High: { color: "text-red-600", bg: "bg-red-50 border border-red-200", icon: ArrowUp, label: "High" },
+  Low: { color: "text-green-700", bg: "bg-green-100 border border-green-300", icon: ArrowDown, label: "Low" },
+  Medium: { color: "text-amber-700", bg: "bg-amber-100 border border-amber-300", icon: Diamond, label: "Medium" },
+  High: { color: "text-red-700", bg: "bg-red-100 border border-red-300", icon: ArrowUp, label: "High" },
 };
 
 const avatarColors = ["bg-amber-500", "bg-blue-500", "bg-pink-500"];

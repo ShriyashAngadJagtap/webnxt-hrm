@@ -63,8 +63,8 @@ const statusColors: Record<WorkStatus, { dot: string; active: string }> = {
 };
 
 const priorityColors: Record<string, string> = {
-  Low: "text-green-600 bg-green-50", Medium: "text-amber-600 bg-amber-50", High: "text-orange-600 bg-orange-50",
-  Urgent: "text-red-600 bg-red-50", Critical: "text-red-700 bg-red-100",
+  Low: "text-green-700 bg-green-500", Medium: "text-amber-700 bg-amber-500", High: "text-orange-700 bg-orange-500",
+  Urgent: "text-red-700 bg-red-500", Critical: "text-red-800 bg-red-600",
 };
 
 const initialForm: FormData = {
@@ -152,7 +152,7 @@ const AddProject = () => {
             <CustomSelect label="Department" required icon={<Building2 className="w-4 h-4" />} value={form.department} onChange={v => set("department", v)} options={departments} error={errors.department} />
             <CustomSelect label="Project Priority" required icon={<Flag className="w-4 h-4" />} value={form.projectPriority} onChange={v => set("projectPriority", v)} options={priorities} error={errors.projectPriority} renderOption={(opt, selected) => (
               <div className="flex items-center gap-2.5">
-                <span className={`w-2 h-2 rounded-full ${priorityColors[opt]?.split(" ")[1] || "bg-gray-200"}`} />
+                <span className={`w-3 h-3 rounded-full ${priorityColors[opt]?.split(" ")[1] || "bg-gray-300"}`} />
                 <span>{opt}</span>
                 {selected && <Check className="w-3.5 h-3.5 ml-auto text-blue-500" />}
               </div>
