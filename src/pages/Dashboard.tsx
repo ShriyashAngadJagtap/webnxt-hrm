@@ -94,10 +94,10 @@ const projectSurveyData = [
 ];
 
 const invoices = [
-  { no: "#IN7865", client: "John Doe", dueDate: "12/05/2016", status: "Paid", total: "$500" },
-  { no: "#IN7866", client: "Sarah Smith", dueDate: "01/15/2017", status: "Pending", total: "$1,200" },
-  { no: "#IN7867", client: "Mike Wilson", dueDate: "02/20/2017", status: "Paid", total: "$750" },
-  { no: "#IN7868", client: "Emily Davis", dueDate: "03/10/2017", status: "Overdue", total: "$2,100" },
+  { no: "#IN7865", client: "John Doe", dueDate: "12/05/2016", status: "Paid", total: "₹41,500 / $500" },
+  { no: "#IN7866", client: "Sarah Smith", dueDate: "01/15/2017", status: "Pending", total: "₹99,600 / $1,200" },
+  { no: "#IN7867", client: "Mike Wilson", dueDate: "02/20/2017", status: "Paid", total: "₹62,250 / $750" },
+  { no: "#IN7868", client: "Emily Davis", dueDate: "03/10/2017", status: "Overdue", total: "₹1,74,300 / $2,100" },
 ];
 
 const dailyBillData = [
@@ -417,7 +417,7 @@ const Dashboard = () => {
                 <DollarSign className="w-5 h-5 text-green-500" />
               </div>
               <p className="text-[11px] text-gray-400 mb-0.5">Earning</p>
-              <p className="text-xl font-bold text-gray-800">$20,125</p>
+              <p className="text-xl font-bold text-gray-800">₹16,70,375 / $20,125</p>
             </div>
             <div className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm text-center">
               <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-2">

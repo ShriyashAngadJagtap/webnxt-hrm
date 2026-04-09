@@ -34,9 +34,9 @@ const Budget = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard icon={DollarSign} title="Total Budget" value={`$${totalBudget.toLocaleString()}`} />
-        <StatCard icon={TrendingDown} title="Used" value={`$${usedBudget.toLocaleString()}`} change={`${((usedBudget / totalBudget) * 100).toFixed(1)}% utilized`} changeType="neutral" />
-        <StatCard icon={TrendingUp} title="Remaining" value={`$${remainingBudget.toLocaleString()}`} change={`${((remainingBudget / totalBudget) * 100).toFixed(1)}% available`} changeType="positive" />
+        <StatCard icon={DollarSign} title="Total Budget" value={`₹${(totalBudget * 83).toLocaleString("en-IN")} / $${totalBudget.toLocaleString()}`} />
+        <StatCard icon={TrendingDown} title="Used" value={`₹${(usedBudget * 83).toLocaleString("en-IN")} / $${usedBudget.toLocaleString()}`} change={`${((usedBudget / totalBudget) * 100).toFixed(1)}% utilized`} changeType="neutral" />
+        <StatCard icon={TrendingUp} title="Remaining" value={`₹${(remainingBudget * 83).toLocaleString("en-IN")} / $${remainingBudget.toLocaleString()}`} change={`${((remainingBudget / totalBudget) * 100).toFixed(1)}% available`} changeType="positive" />
       </div>
 
       {/* Budget Bar */}
@@ -71,7 +71,7 @@ const Budget = () => {
                 <td className="py-3 px-4 text-sm font-medium text-foreground">{t.description}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.category}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.project}</td>
-                <td className="py-3 px-4 text-sm font-semibold text-foreground">${t.amount.toLocaleString()}</td>
+                <td className="py-3 px-4 text-sm font-semibold text-foreground">₹{(t.amount * 83).toLocaleString("en-IN")} / ${t.amount.toLocaleString()}</td>
                 <td className="py-3 px-4"><Badge variant="outline" className={statusColors[t.status]}>{t.status}</Badge></td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.date}</td>
               </tr>

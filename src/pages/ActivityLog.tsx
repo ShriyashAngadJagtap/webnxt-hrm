@@ -15,7 +15,7 @@ const activities: ActivityItem[] = [
   { id: "2", action: "Alice M. completed task \"Design landing page mockup\"", user: "AM", timestamp: "15 minutes ago", icon: ListTodo, iconColor: "bg-success/10 text-success" },
   { id: "3", action: "Bob K. punched in for the day", user: "BK", timestamp: "1 hour ago", icon: Clock, iconColor: "bg-info/10 text-info" },
   { id: "4", action: "Carol S. uploaded \"API Documentation.docx\"", user: "CS", timestamp: "2 hours ago", icon: FileText, iconColor: "bg-warning/10 text-warning" },
-  { id: "5", action: "Dave L. approved budget transaction $5,000", user: "DL", timestamp: "3 hours ago", icon: DollarSign, iconColor: "bg-success/10 text-success" },
+  { id: "5", action: "Dave L. approved budget transaction ₹4,15,000 / $5,000", user: "DL", timestamp: "3 hours ago", icon: DollarSign, iconColor: "bg-success/10 text-success" },
   { id: "6", action: "Eve R. added new team member Frank T.", user: "ER", timestamp: "4 hours ago", icon: Users, iconColor: "bg-primary/10 text-primary" },
   { id: "7", action: "Grace H. marked risk \"SSL expiry\" as Closed", user: "GH", timestamp: "5 hours ago", icon: Activity, iconColor: "bg-muted text-muted-foreground" },
   { id: "8", action: "John Doe updated project \"Website Redesign\" progress to 65%", user: "JD", timestamp: "Yesterday", icon: FolderKanban, iconColor: "bg-primary/10 text-primary" },

@@ -161,7 +161,7 @@ const Dashboard2 = () => {
         <GradientCard title="New Projects" value="102" change="↑ 10% Since last month" gradient="from-green-400 to-green-600" barPct={65} />
         <GradientCard title="New Customers" value="154" change="↑ 4% Since last month" gradient="from-blue-400 to-indigo-600" barPct={72} />
         <GradientCard title="Inquiry" value="524" change="↑ 25% Since last month" gradient="from-orange-400 to-orange-600" barPct={80} />
-        <GradientCard title="Earning" value="$2,453" change="↑ 6% Since last month" gradient="from-purple-500 to-purple-700" barPct={55} />
+        <GradientCard title="Earning" value="₹2,03,600 / $2,453" change="↑ 6% Since last month" gradient="from-purple-500 to-purple-700" barPct={55} />
       </div>
 
       {/* ── Attrition + Project Status ──────────────────────── */}
@@ -362,7 +362,7 @@ const Dashboard2 = () => {
           {/* Earning Source */}
           <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
             <h2 className="text-[15px] font-semibold text-gray-800 mb-1">Earning Source</h2>
-            <p className="text-2xl font-bold text-gray-800 mb-4">$90,808</p>
+            <p className="text-2xl font-bold text-gray-800 mb-4">₹75,37,064 / $90,808</p>
             <div className="space-y-3">
               {earningSources.map((src) => (
                 <div key={src.name} className="flex items-center gap-3">
