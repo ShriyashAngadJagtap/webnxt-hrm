@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemePanel } from "@/components/ThemePanel";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Dashboard2 from "./pages/Dashboard2";
@@ -27,6 +29,10 @@ import Estimates from "./pages/Estimates";
 import Risks from "./pages/Risks";
 import Documents from "./pages/Documents";
 import ActivityLog from "./pages/ActivityLog";
+import Communication from "./pages/Communication";
+import Accounts from "./pages/Accounts";
+import Reports from "./pages/Reports";
+import Administration from "./pages/Administration";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -34,10 +40,12 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ThemePanel />
         <Routes>
           <Route path="*" element={
             <AppLayout>
@@ -65,6 +73,10 @@ const App = () => (
                 <Route path="/risks" element={<Risks />} />
                 <Route path="/documents" element={<Documents />} />
                 <Route path="/activity" element={<ActivityLog />} />
+                <Route path="/communication" element={<Communication />} />
+                <Route path="/accounts" element={<Accounts />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/administration" element={<Administration />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
@@ -73,6 +85,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
