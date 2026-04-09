@@ -8,6 +8,16 @@ import Dashboard from "./pages/Dashboard";
 import Dashboard2 from "./pages/Dashboard2";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import Projects from "./pages/Projects";
+import AddProject from "./pages/projects/AddProject";
+import EditProject from "./pages/projects/EditProject";
+import ProjectEstimates from "./pages/projects/ProjectEstimates";
+import ProjectDetails from "./pages/projects/ProjectDetails";
+import ProjectTimeline from "./pages/projects/ProjectTimeline";
+import ProjectTasks from "./pages/projects/ProjectTasks";
+import ProjectMembers from "./pages/projects/ProjectMembers";
+import ProjectFiles from "./pages/projects/ProjectFiles";
+import ProjectBudget from "./pages/projects/ProjectBudget";
+import ProjectRisks from "./pages/projects/ProjectRisks";
 import Tasks from "./pages/Tasks";
 import Attendance from "./pages/Attendance";
 import Leave from "./pages/Leave";
@@ -36,6 +46,16 @@ const App = () => (
                 <Route path="/dashboard-2" element={<Dashboard2 />} />
                 <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/add" element={<AddProject />} />
+                <Route path="/projects/edit" element={<EditProject />} />
+                <Route path="/projects/estimates" element={<ProjectEstimates />} />
+                <Route path="/projects/details" element={<ProjectDetails />} />
+                <Route path="/projects/timeline" element={<ProjectTimeline />} />
+                <Route path="/projects/tasks" element={<ProjectTasks />} />
+                <Route path="/projects/members" element={<ProjectMembers />} />
+                <Route path="/projects/files" element={<ProjectFiles />} />
+                <Route path="/projects/budget" element={<ProjectBudget />} />
+                <Route path="/projects/risks" element={<ProjectRisks />} />
                 <Route path="/tasks" element={<Tasks />} />
                 <Route path="/attendance" element={<Attendance />} />
                 <Route path="/leave" element={<Leave />} />

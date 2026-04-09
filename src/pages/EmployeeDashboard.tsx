@@ -121,10 +121,10 @@ const EmployeeDashboard = () => {
               <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
               <Legend wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
-              <Bar dataKey="Work Hours" stackId="a" fill="#4f46e5" radius={[0, 0, 0, 0]} barSize={36}
+              <Bar dataKey="Work Hours" stackId="a" fill="#4f46e5" radius={[0, 0, 0, 0]} barSize={56}
                 label={{ position: "center", fontSize: 10, fill: "#fff", formatter: (v: number) => `${v}%` }}
               />
-              <Bar dataKey="Over Hours" stackId="a" fill="#c7d2fe" radius={[4, 4, 0, 0]} barSize={36}
+              <Bar dataKey="Over Hours" stackId="a" fill="#c7d2fe" radius={[4, 4, 0, 0]} barSize={56}
                 label={{ position: "center", fontSize: 10, fill: "#4f46e5", formatter: (v: number) => `${v}%` }}
               />
             </BarChart>
@@ -174,7 +174,7 @@ const EmployeeDashboard = () => {
             <h2 className="text-[15px] font-semibold text-gray-800">Todo List</h2>
             <button className="text-[12px] font-medium text-blue-500 hover:text-blue-600">View All</button>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-200">
             {todoItems.map((item, i) => (
               <div key={i} className="flex items-center gap-3 py-2.5">
                 {item.done ? (
@@ -222,7 +222,7 @@ const EmployeeDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-100 text-center">
+          <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-200 text-center">
             <div>
               <p className="text-lg font-bold text-gray-800">67%</p>
               <p className="text-[10px] text-gray-400">New Ticket</p>
@@ -250,12 +250,12 @@ const EmployeeDashboard = () => {
               <XAxis dataKey="day" tick={{ fontSize: 10, fill: "#94a3b8" }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
-              <Bar dataKey="resolved" stackId="a" fill="#8b5cf6" barSize={18} radius={[0, 0, 0, 0]} />
-              <Bar dataKey="pending" stackId="a" fill="#f59e0b" barSize={18} radius={[0, 0, 0, 0]} />
-              <Bar dataKey="escalated" stackId="a" fill="#94a3b8" barSize={18} radius={[3, 3, 0, 0]} />
+              <Bar dataKey="resolved" stackId="a" fill="#8b5cf6" barSize={36} radius={[0, 0, 0, 0]} />
+              <Bar dataKey="pending" stackId="a" fill="#f59e0b" barSize={36} radius={[0, 0, 0, 0]} />
+              <Bar dataKey="escalated" stackId="a" fill="#94a3b8" barSize={36} radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-          <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-gray-100">
+          <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-gray-200">
             <div className="bg-orange-50 rounded-lg p-3 text-center">
               <p className="text-lg font-bold text-orange-600">30%</p>
               <p className="text-[10px] text-gray-500">Last Week</p>
@@ -276,7 +276,7 @@ const EmployeeDashboard = () => {
             <h2 className="text-[15px] font-semibold text-gray-800">Skills & Proficiency</h2>
             <button className="p-1 rounded hover:bg-gray-100"><MoreVertical className="w-4 h-4 text-gray-400" /></button>
           </div>
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-gray-200">
             {skills.map((skill) => (
               <div key={skill.name} className="py-3">
                 <div className="flex items-center justify-between mb-1.5">
@@ -391,14 +391,14 @@ const EmployeeDashboard = () => {
           </div>
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-100">
+              <tr className="border-b border-gray-200">
                 <th className="text-left py-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Employee Name</th>
                 <th className="text-left py-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Status</th>
               </tr>
             </thead>
             <tbody>
               {myTeam.map((member, i) => (
-                <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                <tr key={i} className="border-b border-gray-200 hover:bg-gray-50/50 transition-colors">
                   <td className="py-3">
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-full ${member.avatarColor} flex items-center justify-center text-white text-[10px] font-bold shrink-0`}>
@@ -430,7 +430,7 @@ const EmployeeDashboard = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100">
+                <tr className="border-b border-gray-200">
                   <th className="text-left py-2 px-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Task</th>
                   <th className="text-left py-2 px-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="text-left py-2 px-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Manager</th>
@@ -441,7 +441,7 @@ const EmployeeDashboard = () => {
               </thead>
               <tbody>
                 {myTasks.map((task, i) => (
-                  <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                  <tr key={i} className="border-b border-gray-200 hover:bg-gray-50/50 transition-colors">
                     <td className="py-3 px-2 text-[13px] font-medium text-gray-800">{task.task}</td>
                     <td className="py-3 px-2">
                       <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${task.statusColor}`}>{task.status}</span>

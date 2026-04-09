@@ -20,7 +20,26 @@ const navItems = [
       { label: "Employee Dashboard", path: "/employee-dashboard" },
     ],
   },
-  { icon: FolderKanban, label: "Projects", path: "/projects", color: "text-blue-500", bg: "bg-blue-50" },
+  {
+    icon: FolderKanban,
+    label: "Projects",
+    path: "/projects",
+    color: "text-orange-500",
+    bg: "bg-orange-50",
+    subItems: [
+      { label: "All Projects", path: "/projects" },
+      { label: "Add Project", path: "/projects/add" },
+      { label: "Edit Project", path: "/projects/edit" },
+      { label: "Estimates", path: "/projects/estimates" },
+      { label: "Project Details", path: "/projects/details" },
+      { label: "Project Timeline", path: "/projects/timeline" },
+      { label: "Project Tasks", path: "/projects/tasks" },
+      { label: "Project Members", path: "/projects/members" },
+      { label: "Project Files", path: "/projects/files" },
+      { label: "Project Budget", path: "/projects/budget" },
+      { label: "Project Risks & Issues", path: "/projects/risks" },
+    ],
+  },
   { icon: Users, label: "Employees", path: "/employees", color: "text-purple-500", bg: "bg-purple-50" },
   { icon: CalendarDays, label: "Leave Management", path: "/leave", color: "text-green-500", bg: "bg-green-50" },
   { icon: Clock, label: "Attendance", path: "/attendance", color: "text-teal-500", bg: "bg-teal-50" },
@@ -41,9 +60,9 @@ export const AppSidebar = () => {
 
   const isActive = (item: typeof navItems[0]) => {
     if (item.subItems) {
-      return item.subItems.some(sub => sub.path === location.pathname);
+      return item.subItems.some(sub => location.pathname === sub.path);
     }
-    return location.pathname === item.path;
+    return location.pathname === item.path || location.pathname.startsWith(item.path + "/");
   };
 
   return (
@@ -99,7 +118,7 @@ export const AppSidebar = () => {
                 >
                   <item.icon className={`w-[18px] h-[18px] shrink-0 ${active ? "text-orange-500" : item.color}`} />
                   <span>{item.label}</span>
-                  {item.label === "Projects" || item.label === "Employees" || item.label === "Leave Management" || item.label === "Clients" ? (
+                  {item.label === "Employees" || item.label === "Leave Management" || item.label === "Clients" ? (
                     <ChevronRight className="w-3.5 h-3.5 shrink-0 ml-auto" />
                   ) : null}
                 </Link>
