@@ -24,6 +24,14 @@ import Tasks from "./pages/Tasks";
 import Attendance from "./pages/Attendance";
 import Leave from "./pages/Leave";
 import Employees from "./pages/Employees";
+import AddEmployee from "./pages/employees/AddEmployee";
+import EditEmployee from "./pages/employees/EditEmployee";
+import EmployeeShift from "./pages/employees/EmployeeShift";
+import EmployeeProfile from "./pages/employees/EmployeeProfile";
+import EmployeeDocuments from "./pages/employees/EmployeeDocuments";
+import EmployeeAssets from "./pages/employees/EmployeeAssets";
+import EmployeePerformance from "./pages/employees/EmployeePerformance";
+import EmployeeExit from "./pages/employees/EmployeeExit";
 import Budget from "./pages/Budget";
 import Estimates from "./pages/Estimates";
 import Risks from "./pages/Risks";
@@ -68,6 +76,14 @@ const App = () => (
                 <Route path="/attendance" element={<Attendance />} />
                 <Route path="/leave" element={<Leave />} />
                 <Route path="/employees" element={<Employees />} />
+                <Route path="/employees/add" element={<AddEmployee />} />
+                <Route path="/employees/edit" element={<EditEmployee />} />
+                <Route path="/employees/shift" element={<EmployeeShift />} />
+                <Route path="/employees/profile" element={<EmployeeProfile />} />
+                <Route path="/employees/documents" element={<EmployeeDocuments />} />
+                <Route path="/employees/assets" element={<EmployeeAssets />} />
+                <Route path="/employees/performance" element={<EmployeePerformance />} />
+                <Route path="/employees/exit" element={<EmployeeExit />} />
                 <Route path="/budget" element={<Budget />} />
                 <Route path="/estimates" element={<Estimates />} />
                 <Route path="/risks" element={<Risks />} />

@@ -4,6 +4,7 @@ import {
   Pencil, Trash2, X, User, CalendarDays, CheckSquare, Type, Percent,
   MessageCircle, Bug, Clock, Layers, Plus
 } from "lucide-react";
+import { StyledDropdown } from "@/components/ui/StyledDropdown";
 
 type ProjectStatus = "New Projects" | "Running" | "On Hold" | "Finished";
 type Priority = "Low" | "Medium" | "High";
@@ -439,11 +440,7 @@ const EditProjectModal = ({ project, onSave, onCancel }: EditModalProps) => {
             <FieldBox label="Project Title*" icon={<Type className="w-4 h-4 text-gray-300" />}>
               <input value={form.name} onChange={e => set("name", e.target.value)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent" />
             </FieldBox>
-            <FieldBox label="Status*">
-              <select value={form.status} onChange={e => set("status", e.target.value as ProjectStatus)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allColumns.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Status" required value={form.status} options={[...allColumns]} onChange={v => set("status", v as ProjectStatus)} compact />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <FieldBox label="Team Leader" icon={<User className="w-4 h-4 text-gray-300" />}>
@@ -454,21 +451,13 @@ const EditProjectModal = ({ project, onSave, onCancel }: EditModalProps) => {
             </FieldBox>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <FieldBox label="Priority*">
-              <select value={form.priority} onChange={e => set("priority", e.target.value as Priority)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allPriorities.map(p => <option key={p} value={p}>{p}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Priority" required value={form.priority} options={[...allPriorities]} onChange={v => set("priority", v as Priority)} compact />
             <FieldBox label="Open Task*" icon={<CheckSquare className="w-4 h-4 text-gray-300" />}>
               <input type="number" value={form.openTasks} onChange={e => set("openTasks", Number(e.target.value))} className="w-full text-[13px] text-gray-700 outline-none bg-transparent" />
             </FieldBox>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <FieldBox label="Type*">
-              <select value={form.category} onChange={e => set("category", e.target.value as Category)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allCategories.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Type" required value={form.category} options={[...allCategories]} onChange={v => set("category", v as Category)} compact />
             <FieldBox label="Created Date*" icon={<CalendarDays className="w-4 h-4 text-gray-300" />}>
               <input type="date" value={form.created} onChange={e => set("created", e.target.value)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent" />
             </FieldBox>
@@ -519,11 +508,7 @@ const AddProjectModal = ({ onSave, onCancel }: { onSave: (p: Project) => void; o
             <FieldBox label="Project Title*" icon={<Type className="w-4 h-4 text-gray-300" />}>
               <input value={form.name} onChange={e => set("name", e.target.value)} placeholder="Enter project name" className="w-full text-[13px] text-gray-700 outline-none bg-transparent placeholder:text-gray-300" />
             </FieldBox>
-            <FieldBox label="Status*">
-              <select value={form.status} onChange={e => set("status", e.target.value as ProjectStatus)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allColumns.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Status" required value={form.status} options={[...allColumns]} onChange={v => set("status", v as ProjectStatus)} compact />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <FieldBox label="Team Leader*" icon={<User className="w-4 h-4 text-gray-300" />}>
@@ -534,21 +519,13 @@ const AddProjectModal = ({ onSave, onCancel }: { onSave: (p: Project) => void; o
             </FieldBox>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <FieldBox label="Priority*">
-              <select value={form.priority} onChange={e => set("priority", e.target.value as Priority)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allPriorities.map(p => <option key={p} value={p}>{p}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Priority" required value={form.priority} options={[...allPriorities]} onChange={v => set("priority", v as Priority)} compact />
             <FieldBox label="Open Task*" icon={<CheckSquare className="w-4 h-4 text-gray-300" />}>
               <input type="number" value={form.openTasks} onChange={e => set("openTasks", Number(e.target.value))} className="w-full text-[13px] text-gray-700 outline-none bg-transparent" />
             </FieldBox>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <FieldBox label="Type*">
-              <select value={form.category} onChange={e => set("category", e.target.value as Category)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent appearance-none cursor-pointer">
-                {allCategories.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </FieldBox>
+            <StyledDropdown label="Type" required value={form.category} options={[...allCategories]} onChange={v => set("category", v as Category)} compact />
             <FieldBox label="Created Date*" icon={<CalendarDays className="w-4 h-4 text-gray-300" />}>
               <input type="date" value={form.created} onChange={e => set("created", e.target.value)} className="w-full text-[13px] text-gray-700 outline-none bg-transparent" />
             </FieldBox>

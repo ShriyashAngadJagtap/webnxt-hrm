@@ -59,8 +59,7 @@ interface ProjectData {
   progress: number;
   tasksCompleted: number;
   tasksTotal: number;
-  budgetINR: string;
-  budgetUSD: string;
+  budget: string;
   budgetNote: string;
   activeRisks: number;
   description: string;
@@ -96,8 +95,7 @@ const projects: ProjectData[] = [
     progress: 75,
     tasksCompleted: 36,
     tasksTotal: 48,
-    budgetINR: "₹16,60,000",
-    budgetUSD: "$20,000",
+    budget: "₹16,60,000",
     budgetNote: "Above Est. ₹1,66,000",
     activeRisks: 2,
     description: "This project involves a complete overhaul of the existing WebNxt HRM Dashboard. The goal is to modernize the UI/UX, improve performance, and add advanced data visualization features. We are currently in the implementation phase of the core modules.",
@@ -136,8 +134,7 @@ const projects: ProjectData[] = [
     progress: 58,
     tasksCompleted: 22,
     tasksTotal: 38,
-    budgetINR: "₹24,90,000",
-    budgetUSD: "$30,000",
+    budget: "₹24,90,000",
     budgetNote: "On Budget",
     activeRisks: 1,
     description: "Building a cross-platform mobile application for e-commerce with real-time inventory management, secure payments, and personalized user experience. The app targets both iOS and Android platforms using React Native.",
@@ -174,8 +171,7 @@ const projects: ProjectData[] = [
     progress: 32,
     tasksCompleted: 10,
     tasksTotal: 31,
-    budgetINR: "₹41,50,000",
-    budgetUSD: "$50,000",
+    budget: "₹41,50,000",
     budgetNote: "Under Review",
     activeRisks: 4,
     description: "Migrating existing on-premise infrastructure to AWS cloud. This includes setting up CI/CD pipelines, containerization with Docker/Kubernetes, database migration, and implementing auto-scaling. Currently on hold due to vendor contract negotiations.",
@@ -210,8 +206,7 @@ const projects: ProjectData[] = [
     progress: 100,
     tasksCompleted: 42,
     tasksTotal: 42,
-    budgetINR: "₹12,45,000",
-    budgetUSD: "$15,000",
+    budget: "₹12,45,000",
     budgetNote: "Under Budget by ₹83,000",
     activeRisks: 0,
     description: "Developed a comprehensive HR analytics dashboard featuring employee performance tracking, attrition prediction models, hiring funnel analysis, and department-wise workforce statistics. Successfully delivered ahead of schedule.",
@@ -247,8 +242,7 @@ const projects: ProjectData[] = [
     progress: 12,
     tasksCompleted: 3,
     tasksTotal: 25,
-    budgetINR: "₹8,30,000",
-    budgetUSD: "$10,000",
+    budget: "₹8,30,000",
     budgetNote: "Estimation Phase",
     activeRisks: 1,
     description: "Redesigning the client-facing portal with modern UI patterns, improved accessibility, multi-language support, and a responsive design. Currently in the planning and discovery phase with stakeholder interviews underway.",
@@ -428,7 +422,7 @@ const ProjectDetails = () => {
           sub={<div className="w-full bg-gray-200 rounded-full h-2 mt-1.5"><div className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500" style={{ width: `${project.progress}%` }} /></div>} />
         <StatCard icon={<CheckSquare className="w-5 h-5" />} iconBg="bg-emerald-100 text-emerald-600" label="Tasks Completed" value={`${project.tasksCompleted}/${project.tasksTotal}`}
           sub={<p className="text-[11px] text-gray-500 font-medium">{project.tasksCompleted === project.tasksTotal ? "All Done!" : "On Schedule"}</p>} />
-        <StatCard icon={<Wallet className="w-5 h-5" />} iconBg="bg-orange-100 text-orange-600" label="Total Budget" value={`${project.budgetINR} / ${project.budgetUSD}`}
+        <StatCard icon={<Wallet className="w-5 h-5" />} iconBg="bg-orange-100 text-orange-600" label="Total Budget" value={project.budget}
           sub={<p className="text-[11px] text-gray-500 font-medium">{project.budgetNote}</p>} />
         <StatCard icon={<AlertTriangle className="w-5 h-5" />} iconBg="bg-red-100 text-red-600" label="Active Risks" value={String(project.activeRisks)}
           sub={<p className={`text-[11px] font-medium ${project.activeRisks > 0 ? "text-red-500" : "text-emerald-500"}`}>{project.activeRisks > 0 ? "Requires Attention" : "No Active Risks"}</p>} />

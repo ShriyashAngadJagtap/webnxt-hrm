@@ -474,7 +474,7 @@ const EmployeeDashboard = () => {
       <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-[15px] font-semibold text-gray-800">Attendance</h2>
-          <select className="text-[12px] border border-gray-200 rounded-md px-3 py-1.5 bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-200">
+          <select className="text-[12px] border-2 border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 font-semibold cursor-pointer hover:border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all appearance-none">
             <option>Class 1</option>
             <option>Class 2</option>
             <option>Class 3</option>

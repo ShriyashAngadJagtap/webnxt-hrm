@@ -4,6 +4,7 @@ import {
   CalendarDays, ChevronLeft, ChevronRight, ChevronDown, X, Check, User,
   FileText, Image, Table2, FileCode, FileType, Presentation, File,
 } from "lucide-react";
+import { PaginationDropdown } from "@/components/ui/StyledDropdown";
 
 /* ═══════════════════════════════════════════
    Types & Data
@@ -277,12 +278,7 @@ const ProjectFiles = () => {
         <div className="px-5 py-3.5 border-t border-gray-100 flex items-center justify-end gap-4 text-[12px] font-semibold text-gray-600">
           <div className="flex items-center gap-2">
             <span>Items per page</span>
-            <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1); }}
-              className="border border-gray-200 rounded-lg px-2 py-1 text-[12px] font-semibold bg-white outline-none cursor-pointer">
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
+            <PaginationDropdown value={perPage} options={[5, 10, 20]} onChange={v => { setPerPage(v); setPage(1); }} />
           </div>
           <span>{(page - 1) * perPage + 1} - {Math.min(page * perPage, filtered.length)} of {filtered.length}</span>
           <div className="flex items-center gap-1">

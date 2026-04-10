@@ -161,7 +161,7 @@ const Dashboard2 = () => {
         <GradientCard title="New Projects" value="102" change="↑ 10% Since last month" gradient="from-green-400 to-green-600" barPct={65} />
         <GradientCard title="New Customers" value="154" change="↑ 4% Since last month" gradient="from-blue-400 to-indigo-600" barPct={72} />
         <GradientCard title="Inquiry" value="524" change="↑ 25% Since last month" gradient="from-orange-400 to-orange-600" barPct={80} />
-        <GradientCard title="Earning" value="₹2,03,600 / $2,453" change="↑ 6% Since last month" gradient="from-purple-500 to-purple-700" barPct={55} />
+        <GradientCard title="Earning" value="₹2,03,600" change="↑ 6% Since last month" gradient="from-purple-500 to-purple-700" barPct={55} />
       </div>
 
       {/* ── Attrition + Project Status ──────────────────────── */}
@@ -304,7 +304,7 @@ const Dashboard2 = () => {
           {/* Pagination */}
           <div className="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-gray-100">
             <span className="text-[12px] text-gray-500">Items per page:</span>
-            <select className="text-[12px] border border-gray-200 rounded-md px-2 py-1 bg-white text-gray-600">
+            <select className="text-[12px] border-2 border-gray-200 rounded-lg px-2.5 py-1.5 bg-white text-gray-700 font-semibold cursor-pointer hover:border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all appearance-none">
               <option>10</option>
               <option>20</option>
             </select>
@@ -362,7 +362,7 @@ const Dashboard2 = () => {
           {/* Earning Source */}
           <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
             <h2 className="text-[15px] font-semibold text-gray-800 mb-1">Earning Source</h2>
-            <p className="text-2xl font-bold text-gray-800 mb-4">₹75,37,064 / $90,808</p>
+            <p className="text-2xl font-bold text-gray-800 mb-4">₹75,37,064</p>
             <div className="space-y-3">
               {earningSources.map((src) => (
                 <div key={src.name} className="flex items-center gap-3">

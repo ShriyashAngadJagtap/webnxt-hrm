@@ -45,7 +45,7 @@ const Estimates = () => {
                 <td className="py-3 px-4 text-sm font-medium text-primary">{est.id}</td>
                 <td className="py-3 px-4 text-sm font-medium text-foreground">{est.client}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{est.project}</td>
-                <td className="py-3 px-4 text-sm font-semibold text-foreground">${est.amount.toLocaleString()}</td>
+                <td className="py-3 px-4 text-sm font-semibold text-foreground">₹{(est.amount * 83).toLocaleString("en-IN")}</td>
                 <td className="py-3 px-4"><Badge variant="outline" className={statusColors[est.status]}>{est.status}</Badge></td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{est.date}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{est.validUntil}</td>

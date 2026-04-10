@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import {
   Search, Filter, Plus, RefreshCw, Download, Edit3, Trash2, X,
-  Phone, Mail, CalendarDays, MapPin, DollarSign, ChevronDown, Check,
+  Phone, Mail, CalendarDays, MapPin, IndianRupee, ChevronDown, Check,
   UserCircle, FileText, ChevronLeft, ChevronRight, AlertTriangle
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { PaginationDropdown } from "@/components/ui/StyledDropdown";
 
 /* ═══════════════════════════════════════════
    Types & Data
@@ -114,7 +115,7 @@ const ProjectEstimates = () => {
     return d.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" });
   };
 
-  const formatAmount = (amt: number) => `₹${(amt * 83).toLocaleString("en-IN")} / $${amt.toLocaleString()}`;
+  const formatAmount = (amt: number) => `₹${(amt * 83).toLocaleString("en-IN")}`;
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -209,7 +210,7 @@ const ProjectEstimates = () => {
                       <span className="inline-flex items-center gap-1.5"><CalendarDays className="w-3 h-3 text-orange-500" />{formatDate(est.expirationDate)}</span>
                     </td>
                     <td className="px-3 py-3 text-[12px] text-gray-700 font-semibold">{est.country}</td>
-                    <td className="px-3 py-3 text-[13px] font-bold text-gray-900 whitespace-nowrap">${est.amount.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-[13px] font-bold text-gray-900 whitespace-nowrap">₹{(est.amount * 83).toLocaleString("en-IN")}</td>
                     <td className="px-3 py-3">
                       <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${sc.bg} ${sc.text}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${sc.dot}`} />
@@ -239,10 +240,7 @@ const ProjectEstimates = () => {
         <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2 text-[12px] text-gray-600 font-medium">
             Items per page:
-            <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1); }}
-              className="border-2 border-gray-200 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold text-gray-800 bg-white outline-none focus:border-blue-400 cursor-pointer">
-              {[5, 10, 20, 50].map(n => <option key={n} value={n}>{n}</option>)}
-            </select>
+            <PaginationDropdown value={perPage} options={[5, 10, 20, 50]} onChange={v => { setPerPage(v); setPage(1); }} />
           </div>
           <div className="flex items-center gap-3">
             <span className="text-[12px] text-gray-600 font-medium">
@@ -412,7 +410,7 @@ const EstimateModal = ({ title, estimate, onSave, onClose, saveLabel }: {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ModalSelect label="Country" required value={form.country} onChange={v => set("country", v)} options={countries} error={errors.country} icon={<MapPin className="w-4 h-4" />} />
-            <ModalField label="Amount" required value={form.amount ? String(form.amount) : ""} onChange={v => set("amount", Number(v) || 0)} error={errors.amount} placeholder="Enter Amount" icon={<DollarSign className="w-4 h-4" />} />
+            <ModalField label="Amount" required value={form.amount ? String(form.amount) : ""} onChange={v => set("amount", Number(v) || 0)} error={errors.amount} placeholder="Enter Amount" icon={<IndianRupee className="w-4 h-4" />} />
           </div>
           <ModalSelect label="Status" required value={form.status} onChange={v => set("status", v as EstimateStatus)} options={[...allStatuses]} icon={<ChevronDown className="w-4 h-4" />} />
           <div>

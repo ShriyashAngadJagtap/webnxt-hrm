@@ -2,8 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import {
   Search, Filter, RefreshCw, Download, UserPlus, Edit3, Trash2,
   CalendarDays, ChevronLeft, ChevronRight, ChevronDown, X, Check,
-  Wallet, ShoppingCart, PiggyBank, HeartPulse, DollarSign,
+  Wallet, ShoppingCart, PiggyBank, HeartPulse, IndianRupee,
 } from "lucide-react";
+import { PaginationDropdown } from "@/components/ui/StyledDropdown";
 
 /* ═══════════════════════════════════════════
    Types & Data
@@ -100,7 +101,7 @@ const ProjectBudget = () => {
     setAddOpen(false);
   };
 
-  const fmt = (n: number) => n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
+  const fmt = (n: number) => `₹${n.toLocaleString("en-IN", { minimumFractionDigits: 2 })}`;
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -201,10 +202,7 @@ const ProjectBudget = () => {
         <div className="px-5 py-3.5 border-t border-gray-100 flex items-center justify-end gap-4 text-[12px] font-semibold text-gray-600">
           <div className="flex items-center gap-2">
             <span>Items per page</span>
-            <select value={perPage} onChange={e => { setPerPage(Number(e.target.value)); setPage(1); }}
-              className="border border-gray-200 rounded-lg px-2 py-1 text-[12px] font-semibold bg-white outline-none cursor-pointer">
-              <option value={5}>5</option><option value={10}>10</option><option value={20}>20</option>
-            </select>
+            <PaginationDropdown value={perPage} options={[5, 10, 20]} onChange={v => { setPerPage(v); setPage(1); }} />
           </div>
           <span>{(page - 1) * perPage + 1} - {Math.min(page * perPage, filtered.length)} of {filtered.length}</span>
           <div className="flex items-center gap-1">
@@ -298,7 +296,7 @@ const EditModal = ({ txn, onSave, onClose }: EditModalProps) => {
             {/* Amount */}
             <FieldInput label="Amount" required type="number" value={String(form.amount)}
               onChange={v => setForm(f => ({ ...f, amount: Number(v) }))}
-              icon={<DollarSign className="w-4 h-4 text-gray-400" />} />
+              icon={<IndianRupee className="w-4 h-4 text-gray-400" />} />
 
             {/* Status */}
             <FieldSelect label="Status" required value={form.status}
@@ -399,7 +397,7 @@ const AddModal = ({ onSave, onClose }: { onSave: (t: Omit<Transaction, "id">) =>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FieldInput label="Description" required value={form.description} onChange={v => setForm(f => ({ ...f, description: v }))} />
             <FieldSelect label="Category" required value={form.category} options={categories} onChange={v => setForm(f => ({ ...f, category: v as Category }))} />
-            <FieldInput label="Amount" required type="number" value={form.amount ? String(form.amount) : ""} onChange={v => setForm(f => ({ ...f, amount: Number(v) }))} icon={<DollarSign className="w-4 h-4 text-gray-400" />} />
+            <FieldInput label="Amount" required type="number" value={form.amount ? String(form.amount) : ""} onChange={v => setForm(f => ({ ...f, amount: Number(v) }))} icon={<IndianRupee className="w-4 h-4 text-gray-400" />} />
             <FieldSelect label="Status" required value={form.status} options={statuses} onChange={v => setForm(f => ({ ...f, status: v as BudgetStatus }))} />
             <FieldInput label="Date" required type="date" value={form.date} onChange={v => setForm(f => ({ ...f, date: v }))} icon={<CalendarDays className="w-4 h-4 text-gray-400" />} />
           </div>

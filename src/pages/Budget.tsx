@@ -1,15 +1,15 @@
-import { DollarSign, TrendingUp, TrendingDown, Plus } from "lucide-react";
+import { IndianRupee, TrendingUp, TrendingDown, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/dashboard/StatCard";
 
 const transactions = [
-  { id: "1", description: "Design software licenses", category: "Software", amount: 2400, status: "Approved", date: "Apr 07", project: "Website Redesign" },
-  { id: "2", description: "Cloud hosting Q2", category: "Infrastructure", amount: 5000, status: "Pending", date: "Apr 06", project: "All Projects" },
-  { id: "3", description: "Contractor payment", category: "Personnel", amount: 8500, status: "Approved", date: "Apr 05", project: "Mobile App v2.0" },
-  { id: "4", description: "Marketing materials", category: "Marketing", amount: 1200, status: "Rejected", date: "Apr 04", project: "Website Redesign" },
-  { id: "5", description: "QA testing tools", category: "Software", amount: 800, status: "Approved", date: "Apr 03", project: "Security Audit" },
-  { id: "6", description: "Training budget", category: "HR", amount: 3000, status: "Pending", date: "Apr 02", project: "All Projects" },
+  { id: "1", description: "Design software licenses", category: "Software", amount: 199200, status: "Approved", date: "Apr 07", project: "Website Redesign" },
+  { id: "2", description: "Cloud hosting Q2", category: "Infrastructure", amount: 415000, status: "Pending", date: "Apr 06", project: "All Projects" },
+  { id: "3", description: "Contractor payment", category: "Personnel", amount: 705500, status: "Approved", date: "Apr 05", project: "Mobile App v2.0" },
+  { id: "4", description: "Marketing materials", category: "Marketing", amount: 99600, status: "Rejected", date: "Apr 04", project: "Website Redesign" },
+  { id: "5", description: "QA testing tools", category: "Software", amount: 66400, status: "Approved", date: "Apr 03", project: "Security Audit" },
+  { id: "6", description: "Training budget", category: "HR", amount: 249000, status: "Pending", date: "Apr 02", project: "All Projects" },
 ];
 
 const statusColors: Record<string, string> = {
@@ -18,9 +18,11 @@ const statusColors: Record<string, string> = {
   Rejected: "bg-destructive/10 text-destructive border-destructive/20",
 };
 
+const fmtINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+
 const Budget = () => {
-  const totalBudget = 200000;
-  const usedBudget = 127500;
+  const totalBudget = 1_66_00_000;
+  const usedBudget = 1_05_82_500;
   const remainingBudget = totalBudget - usedBudget;
 
   return (
@@ -34,12 +36,11 @@ const Budget = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard icon={DollarSign} title="Total Budget" value={`₹${(totalBudget * 83).toLocaleString("en-IN")} / $${totalBudget.toLocaleString()}`} />
-        <StatCard icon={TrendingDown} title="Used" value={`₹${(usedBudget * 83).toLocaleString("en-IN")} / $${usedBudget.toLocaleString()}`} change={`${((usedBudget / totalBudget) * 100).toFixed(1)}% utilized`} changeType="neutral" />
-        <StatCard icon={TrendingUp} title="Remaining" value={`₹${(remainingBudget * 83).toLocaleString("en-IN")} / $${remainingBudget.toLocaleString()}`} change={`${((remainingBudget / totalBudget) * 100).toFixed(1)}% available`} changeType="positive" />
+        <StatCard icon={IndianRupee} title="Total Budget" value={fmtINR(totalBudget)} />
+        <StatCard icon={TrendingDown} title="Used" value={fmtINR(usedBudget)} change={`${((usedBudget / totalBudget) * 100).toFixed(1)}% utilized`} changeType="neutral" />
+        <StatCard icon={TrendingUp} title="Remaining" value={fmtINR(remainingBudget)} change={`${((remainingBudget / totalBudget) * 100).toFixed(1)}% available`} changeType="positive" />
       </div>
 
-      {/* Budget Bar */}
       <div className="bg-card rounded-xl border border-border p-5">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-foreground">Budget Utilization</span>
@@ -71,7 +72,7 @@ const Budget = () => {
                 <td className="py-3 px-4 text-sm font-medium text-foreground">{t.description}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.category}</td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.project}</td>
-                <td className="py-3 px-4 text-sm font-semibold text-foreground">₹{(t.amount * 83).toLocaleString("en-IN")} / ${t.amount.toLocaleString()}</td>
+                <td className="py-3 px-4 text-sm font-semibold text-foreground">{fmtINR(t.amount)}</td>
                 <td className="py-3 px-4"><Badge variant="outline" className={statusColors[t.status]}>{t.status}</Badge></td>
                 <td className="py-3 px-4 text-sm text-muted-foreground">{t.date}</td>
               </tr>
