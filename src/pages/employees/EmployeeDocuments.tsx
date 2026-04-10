@@ -83,11 +83,21 @@ const initialDocs: EmployeeDoc[] = [
   { id: "DOC-021", employeeName: "Emily Davis", fileName: "salary_slip.xls", type: "XLS", size: "340 KB", uploadedBy: "Admin", date: "2023-04-15", status: "Approved" },
 ];
 
+interface EmployeeSummary {
+  name: string;
+  totalDocs: number;
+  approved: number;
+  pending: number;
+  rejected: number;
+  totalSize: string;
+  lastUpload: string;
+  fileTypes: DocType[];
+}
+
 const EmployeeDocuments = () => {
   const [docs, setDocs] = useState(initialDocs);
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [editDoc, setEditDoc] = useState<EmployeeDoc | null>(null);
@@ -95,22 +105,46 @@ const EmployeeDocuments = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [vaultEmployee, setVaultEmployee] = useState<string | null>(null);
 
-  const filtered = docs.filter(d => {
-    const ms = d.employeeName.toLowerCase().includes(search.toLowerCase()) || d.fileName.toLowerCase().includes(search.toLowerCase());
-    return ms && (statusFilter === "All" || d.status === statusFilter);
-  });
+  const employeeSummaries: EmployeeSummary[] = (() => {
+    const map = new Map<string, EmployeeDoc[]>();
+    docs.forEach(d => { const arr = map.get(d.employeeName) || []; arr.push(d); map.set(d.employeeName, arr); });
+    const summaries: EmployeeSummary[] = [];
+    map.forEach((empDocs, name) => {
+      const sizeBytes = empDocs.reduce((acc, d) => {
+        const num = parseFloat(d.size);
+        if (d.size.includes("MB")) return acc + num;
+        if (d.size.includes("KB")) return acc + num / 1024;
+        return acc;
+      }, 0);
+      const dates = empDocs.map(d => d.date).sort();
+      const types = [...new Set(empDocs.map(d => d.type))];
+      summaries.push({
+        name,
+        totalDocs: empDocs.length,
+        approved: empDocs.filter(d => d.status === "Approved").length,
+        pending: empDocs.filter(d => d.status === "Pending").length,
+        rejected: empDocs.filter(d => d.status === "Rejected").length,
+        totalSize: sizeBytes >= 1 ? `${sizeBytes.toFixed(1)} MB` : `${Math.round(sizeBytes * 1024)} KB`,
+        lastUpload: dates[dates.length - 1] || "",
+        fileTypes: types,
+      });
+    });
+    return summaries;
+  })();
+
+  const filtered = employeeSummaries.filter(e => e.name.toLowerCase().includes(search.toLowerCase()));
 
   const totalPages = Math.ceil(filtered.length / perPage);
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
-  const allSelected = paged.length > 0 && paged.every(d => selectedIds.includes(d.id));
-  const toggleAll = () => { if (allSelected) setSelectedIds(p => p.filter(id => !paged.some(d => d.id === id))); else setSelectedIds(p => [...new Set([...p, ...paged.map(d => d.id)])]); };
-  const toggleOne = (id: string) => setSelectedIds(p => p.includes(id) ? p.filter(i => i !== id) : [...p, id]);
+  const allSelected = paged.length > 0 && paged.every(e => selectedNames.includes(e.name));
+  const toggleAll = () => { if (allSelected) setSelectedNames(p => p.filter(n => !paged.some(e => e.name === n))); else setSelectedNames(p => [...new Set([...p, ...paged.map(e => e.name)])]); };
+  const toggleOne = (name: string) => setSelectedNames(p => p.includes(name) ? p.filter(n => n !== name) : [...p, name]);
 
+  const totalDocsCount = docs.length;
   const approved = docs.filter(d => d.status === "Approved").length;
   const pending = docs.filter(d => d.status === "Pending").length;
   const rejected = docs.filter(d => d.status === "Rejected").length;
 
-  const uniqueEmployees = [...new Set(docs.map(d => d.employeeName))];
   const vaultDocs = vaultEmployee ? docs.filter(d => d.employeeName === vaultEmployee) : [];
 
   return (
@@ -119,8 +153,8 @@ const EmployeeDocuments = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <KpiCard gradient="from-blue-500 to-indigo-600" icon={<FolderOpen className="w-5 h-5 text-white" />} label="Total Documents" value={String(docs.length)} sub="All uploaded files" />
-        <KpiCard gradient="from-emerald-500 to-teal-600" icon={<Shield className="w-5 h-5 text-white" />} label="Approved" value={String(approved)} sub={`${docs.length > 0 ? Math.round((approved / docs.length) * 100) : 0}% verified`} />
+        <KpiCard gradient="from-blue-500 to-indigo-600" icon={<FolderOpen className="w-5 h-5 text-white" />} label="Total Documents" value={String(totalDocsCount)} sub={`${employeeSummaries.length} employees`} />
+        <KpiCard gradient="from-emerald-500 to-teal-600" icon={<Shield className="w-5 h-5 text-white" />} label="Approved" value={String(approved)} sub={`${totalDocsCount > 0 ? Math.round((approved / totalDocsCount) * 100) : 0}% verified`} />
         <KpiCard gradient="from-amber-500 to-orange-600" icon={<Clock className="w-5 h-5 text-white" />} label="Pending Review" value={String(pending)} sub="Awaiting approval" />
         <KpiCard gradient="from-red-500 to-rose-600" icon={<XCircle className="w-5 h-5 text-white" />} label="Rejected" value={String(rejected)} sub="Needs re-upload" />
       </div>
@@ -134,11 +168,10 @@ const EmployeeDocuments = () => {
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
               <input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
-                placeholder="Search..." className="pl-8 pr-3 py-1.5 text-xs border border-gray-200 rounded-lg w-44 focus:outline-none focus:border-blue-400 text-gray-900 placeholder:text-gray-400" />
+                placeholder="Search employee..." className="pl-8 pr-3 py-1.5 text-xs border border-gray-200 rounded-lg w-48 focus:outline-none focus:border-blue-400 text-gray-900 placeholder:text-gray-400" />
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <ToolbarDropdown value={statusFilter} options={docStatuses} onChange={v => { setStatusFilter(v); setPage(1); }} allLabel="All Status" />
             <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500" title="Filter"><Filter className="w-4 h-4" /></button>
             <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500" title="Refresh"><RefreshCw className="w-4 h-4" /></button>
             <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500" title="Download All"><Download className="w-4 h-4" /></button>
@@ -146,91 +179,98 @@ const EmployeeDocuments = () => {
           </div>
         </div>
 
-        {/* Table */}
+        {/* Table — One row per employee */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="bg-gray-50/80 text-gray-500 uppercase tracking-wider text-[10px]">
                 <th className="px-4 py-3 w-10"><input type="checkbox" checked={allSelected} onChange={toggleAll} className="rounded" /></th>
                 <th className="px-4 py-3 font-semibold">Employee Name</th>
-                <th className="px-4 py-3 font-semibold">File Name</th>
-                <th className="px-4 py-3 font-semibold">Type</th>
-                <th className="px-4 py-3 font-semibold">Size</th>
-                <th className="px-4 py-3 font-semibold">Uploaded By</th>
-                <th className="px-4 py-3 font-semibold">Date</th>
-                <th className="px-4 py-3 font-semibold">Status</th>
-                <th className="px-4 py-3 font-semibold text-center">Download</th>
-                <th className="px-4 py-3 font-semibold text-center">Actions</th>
+                <th className="px-4 py-3 font-semibold">Total Docs</th>
+                <th className="px-4 py-3 font-semibold">File Types</th>
+                <th className="px-4 py-3 font-semibold">Total Size</th>
+                <th className="px-4 py-3 font-semibold">Last Upload</th>
+                <th className="px-4 py-3 font-semibold">Status Summary</th>
+                <th className="px-4 py-3 font-semibold text-center">View All</th>
               </tr>
             </thead>
             <tbody>
-              {paged.map(doc => {
-                const tc = typeConfig[doc.type];
-                const sc = statusConfig[doc.status];
-                const Icon = tc.icon;
-                const StatusIcon = sc.icon;
-                const empDocCount = docs.filter(d => d.employeeName === doc.employeeName).length;
-                return (
-                  <tr key={doc.id} className="border-t border-gray-50 hover:bg-blue-50/20 transition-colors group">
-                    <td className="px-4 py-3.5"><input type="checkbox" checked={selectedIds.includes(doc.id)} onChange={() => toggleOne(doc.id)} className="rounded" /></td>
-                    <td className="px-4 py-3.5">
-                      <button onClick={() => setVaultEmployee(doc.employeeName)} className="flex items-center gap-2.5 group/emp text-left">
-                        <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${getColor(doc.employeeName)} flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm`}>
-                          {getInitials(doc.employeeName)}
-                        </div>
-                        <div>
-                          <span className="font-semibold text-gray-900 whitespace-nowrap group-hover/emp:text-blue-600 transition-colors">{doc.employeeName}</span>
-                          <span className="block text-[10px] text-gray-400 font-medium">{empDocCount} doc{empDocCount > 1 ? "s" : ""} — click to view all</span>
-                        </div>
-                      </button>
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-7 h-7 rounded-lg ${tc.bg} flex items-center justify-center shrink-0 ring-1 ${tc.ring}`}>
-                          <Icon className={`w-3.5 h-3.5 ${tc.text}`} />
-                        </div>
-                        <span className="text-gray-800 font-medium">{doc.fileName}</span>
+              {paged.map(emp => (
+                <tr key={emp.name} className="border-t border-gray-50 hover:bg-blue-50/20 transition-colors group cursor-pointer" onClick={() => setVaultEmployee(emp.name)}>
+                  <td className="px-4 py-4" onClick={e => e.stopPropagation()}>
+                    <input type="checkbox" checked={selectedNames.includes(emp.name)} onChange={() => toggleOne(emp.name)} className="rounded" />
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${getColor(emp.name)} flex items-center justify-center text-white text-[11px] font-bold shrink-0 shadow-sm`}>
+                        {getInitials(emp.name)}
                       </div>
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold ${tc.bg} ${tc.text} ring-1 ${tc.ring}`}>
-                        {doc.type}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <div className="flex items-center gap-1.5">
-                        <HardDrive className="w-3 h-3 text-gray-400" />
-                        <span className="text-gray-600 font-medium">{doc.size}</span>
+                      <div>
+                        <span className="font-semibold text-gray-900 whitespace-nowrap group-hover:text-blue-600 transition-colors">{emp.name}</span>
+                        <span className="block text-[10px] text-blue-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">Click to open vault</span>
                       </div>
-                    </td>
-                    <td className="px-4 py-3.5 text-gray-700 font-medium">{doc.uploadedBy}</td>
-                    <td className="px-4 py-3.5 whitespace-nowrap">
-                      <div className="flex items-center gap-1.5">
-                        <CalendarDays className="w-3 h-3 text-blue-500" />
-                        <span className="text-gray-700">{doc.date}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                        <FolderOpen className="w-4 h-4 text-blue-500" />
                       </div>
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold ${sc.bg} ${sc.text}`}>
-                        <StatusIcon className={`w-3 h-3 ${sc.iconColor}`} />
-                        {doc.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3.5 text-center">
-                      <button className="p-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 transition-colors shadow-sm hover:shadow group-hover:scale-105 transform duration-200" title="Download">
-                        <Download className="w-3.5 h-3.5" />
-                      </button>
-                    </td>
-                    <td className="px-4 py-3.5">
-                      <div className="flex items-center justify-center gap-1.5">
-                        <button onClick={() => setEditDoc({ ...doc })} className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors" title="Edit"><Edit3 className="w-3.5 h-3.5" /></button>
-                        <button onClick={() => setDeleteDoc(doc)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-colors" title="Delete"><Trash2 className="w-3.5 h-3.5" /></button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-              {paged.length === 0 && <tr><td colSpan={10} className="text-center py-14 text-gray-400 text-sm">No documents found.</td></tr>}
+                      <span className="text-lg font-bold text-gray-900">{emp.totalDocs}</span>
+                      <span className="text-[10px] text-gray-400 font-medium">file{emp.totalDocs > 1 ? "s" : ""}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {emp.fileTypes.map(t => {
+                        const tc = typeConfig[t];
+                        return (
+                          <span key={t} className={`inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold ${tc.bg} ${tc.text} ring-1 ${tc.ring}`}>
+                            {t}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-1.5">
+                      <HardDrive className="w-3 h-3 text-gray-400" />
+                      <span className="text-gray-700 font-semibold">{emp.totalSize}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <CalendarDays className="w-3 h-3 text-blue-500" />
+                      <span className="text-gray-700">{emp.lastUpload}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {emp.approved > 0 && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-700">
+                          <CheckCircle2 className="w-2.5 h-2.5" /> {emp.approved}
+                        </span>
+                      )}
+                      {emp.pending > 0 && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700">
+                          <Clock className="w-2.5 h-2.5" /> {emp.pending}
+                        </span>
+                      )}
+                      {emp.rejected > 0 && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-50 text-red-700">
+                          <XCircle className="w-2.5 h-2.5" /> {emp.rejected}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-center">
+                    <button className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-[11px] font-semibold shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30 transition-all flex items-center gap-1.5 mx-auto">
+                      <Eye className="w-3.5 h-3.5" /> Open Vault
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {paged.length === 0 && <tr><td colSpan={8} className="text-center py-14 text-gray-400 text-sm">No employees found.</td></tr>}
             </tbody>
           </table>
         </div>
