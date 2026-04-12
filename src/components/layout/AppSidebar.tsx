@@ -60,8 +60,35 @@ const navItems = [
       { label: "Employee Exit / Offboarding", path: "/employees/exit" },
     ],
   },
-  { icon: CalendarDays, label: "Leave Management", path: "/leave", color: "text-green-500", bg: "bg-green-50" },
-  { icon: Clock, label: "Attendance", path: "/attendance", color: "text-teal-500", bg: "bg-teal-50" },
+  {
+    icon: CalendarDays,
+    label: "Leave Management",
+    path: "/leave",
+    color: "text-green-500",
+    bg: "bg-green-50",
+    subItems: [
+      { label: "All Leave Requests", path: "/leave" },
+      { label: "Leave Balance", path: "/leave/balance" },
+      { label: "Leave Types", path: "/leave/types" },
+      { label: "Leave Settings", path: "/leave/settings" },
+    ],
+  },
+  {
+    icon: Clock,
+    label: "Attendance",
+    path: "/attendance",
+    color: "text-teal-500",
+    bg: "bg-teal-50",
+    subItems: [
+      { label: "Today's Attendance", path: "/attendance" },
+      { label: "Employee Attendance", path: "/attendance/employee" },
+      { label: "Attendance Sheet", path: "/attendance/sheet" },
+      { label: "Timesheets", path: "/attendance/timesheets" },
+      { label: "Overtime Requests", path: "/attendance/overtime" },
+      { label: "Shift Planning", path: "/attendance/shift-planning" },
+      { label: "Remote / WFH Requests", path: "/attendance/wfh" },
+    ],
+  },
   { icon: Palmtree, label: "Holidays", path: "/leave", color: "text-yellow-500", bg: "bg-yellow-50" },
   { icon: UserCircle, label: "Clients", path: "/projects", color: "text-indigo-500", bg: "bg-indigo-50" },
   { icon: Wallet, label: "Payroll", path: "/budget", color: "text-pink-500", bg: "bg-pink-50" },
@@ -156,7 +183,7 @@ export const AppSidebar = () => {
                 >
                   <item.icon className={`w-[18px] h-[18px] shrink-0 ${active ? activeAccent : dark ? "text-gray-500" : item.color}`} />
                   <span>{item.label}</span>
-                  {item.label === "Employees" || item.label === "Leave Management" || item.label === "Clients" ? (
+                  {item.label === "Employees" || item.label === "Clients" ? (
                     <ChevronRight className="w-3.5 h-3.5 shrink-0 ml-auto" />
                   ) : null}
                 </Link>

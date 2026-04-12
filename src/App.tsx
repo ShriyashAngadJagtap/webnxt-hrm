@@ -22,6 +22,12 @@ import ProjectBudget from "./pages/projects/ProjectBudget";
 import ProjectRisks from "./pages/projects/ProjectRisks";
 import Tasks from "./pages/Tasks";
 import Attendance from "./pages/Attendance";
+import EmployeeAttendance from "./pages/attendance/EmployeeAttendance";
+import AttendanceSheet from "./pages/attendance/AttendanceSheet";
+import Timesheets from "./pages/attendance/Timesheets";
+import OvertimeRequests from "./pages/attendance/OvertimeRequests";
+import ShiftPlanning from "./pages/attendance/ShiftPlanning";
+import RemoteWfh from "./pages/attendance/RemoteWfh";
 import Leave from "./pages/Leave";
 import Employees from "./pages/Employees";
 import AddEmployee from "./pages/employees/AddEmployee";
@@ -32,6 +38,9 @@ import EmployeeDocuments from "./pages/employees/EmployeeDocuments";
 import EmployeeAssets from "./pages/employees/EmployeeAssets";
 import EmployeePerformance from "./pages/employees/EmployeePerformance";
 import EmployeeExit from "./pages/employees/EmployeeExit";
+import LeaveBalance from "./pages/leave/LeaveBalance";
+import LeaveTypes from "./pages/leave/LeaveTypes";
+import LeaveSettings from "./pages/leave/LeaveSettings";
 import Budget from "./pages/Budget";
 import Estimates from "./pages/Estimates";
 import Risks from "./pages/Risks";
@@ -74,7 +83,16 @@ const App = () => (
                 <Route path="/projects/risks" element={<ProjectRisks />} />
                 <Route path="/tasks" element={<Tasks />} />
                 <Route path="/attendance" element={<Attendance />} />
+                <Route path="/attendance/employee" element={<EmployeeAttendance />} />
+                <Route path="/attendance/sheet" element={<AttendanceSheet />} />
+                <Route path="/attendance/timesheets" element={<Timesheets />} />
+                <Route path="/attendance/overtime" element={<OvertimeRequests />} />
+                <Route path="/attendance/shift-planning" element={<ShiftPlanning />} />
+                <Route path="/attendance/wfh" element={<RemoteWfh />} />
                 <Route path="/leave" element={<Leave />} />
+                <Route path="/leave/balance" element={<LeaveBalance />} />
+                <Route path="/leave/types" element={<LeaveTypes />} />
+                <Route path="/leave/settings" element={<LeaveSettings />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/employees/add" element={<AddEmployee />} />
                 <Route path="/employees/edit" element={<EditEmployee />} />
